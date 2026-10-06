@@ -1,0 +1,9 @@
+# Evita que Windows convierta los scripts a CRLF (rompe bash dentro del contenedor)
+*.sh   text eol=lf
+*.sql  text eol=lf
+*.py   text eol=lf
+*.yml  text eol=lf
+Dockerfile text eol=lf
+*.png  binary
+*.docx binary
+*.pdf  binary

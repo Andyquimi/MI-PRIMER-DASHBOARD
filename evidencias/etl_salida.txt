@@ -1,0 +1,27 @@
+[ 1] orders        99,441 ->    99,441  Fechas convertidas de texto a datetime
+[ 2] orders        99,441 ->    99,441  Eliminados order_id duplicados
+[ 3] orders        99,441 ->    99,092  Período de análisis: 2017-01-01 a 2018-08-31 (se descarta 2016 y sep-oct 2018)
+[ 4] orders        99,092 ->    99,092  Descartados pedidos con fecha de entrega ANTERIOR a la compra
+[ 5] orders        99,092 ->    99,092  Estado normalizado (minúsculas); fechas nulas se mantienen en pedidos no entregados
+[ 6] items        112,650 ->   112,279  Solo ítems de pedidos del período; fecha convertida a datetime
+[ 7] items        112,279 ->   112,279  Valores atípicos de price detectados (boxplot/IQR): 8,388. Se CONSERVAN (son precios altos legítimos)
+[ 8] customers     99,441 ->    99,092  Solo clientes con pedidos; ciudad normalizada (minúsculas, sin acentos); zip como texto
+[ 9] sellers        3,095 ->     3,095  Ciudad normalizada; zip como texto
+[10] products      32,951 ->    32,951  Unido con traducción de categorías; 610 sin categoría -> 'sin_categoria'; 0 sin traducción; columnas renombradas (se corrigen errores ortográficos)
+[11] payments     103,886 ->    99,092  Pagos resumidos a UNA fila por pedido (tipo principal = el de mayor valor; cuotas = máximo)
+[12] reviews       99,224 ->    98,330  Una reseña por pedido (la más reciente); comentarios de texto excluidos (88 % / 59 % vacíos)
+[13] geoloc     1,000,163 ->    19,010  De-duplicada: UN punto por código postal (promedio de coordenadas)
+
+CSV limpios guardados en /app/data/limpio
+Log de transformaciones en /app/docs/log_transformaciones.csv
+
+Conectando a PostgreSQL ...
+  stg.pedidos             99,092 filas cargadas
+  stg.items              112,279 filas cargadas
+  stg.clientes            99,092 filas cargadas
+  stg.vendedores           3,095 filas cargadas
+  stg.productos           32,951 filas cargadas
+  stg.pagos_pedido        99,092 filas cargadas
+  stg.resenas             98,330 filas cargadas
+  stg.geolocalizacion     19,010 filas cargadas
+Staging cargado correctamente.

@@ -1,0 +1,103 @@
+--- KPI sin filtros (todo el período) ---
+ ingresos_totales | ticket_promedio | pct_entrega_a_tiempo | dias_entrega_prom | calificacion_prom | pct_recompra 
+------------------+-----------------+----------------------+-------------------+-------------------+--------------
+      13449529.68 |          137.37 |                93.21 |              12.5 |              4.12 |         3.03
+(1 row)
+
+--- KPI con filtros (2017, estado SP) ---
+ ingresos_2017_sp | pct_a_tiempo_2017_sp 
+------------------+----------------------
+       2192396.73 |                96.19
+(1 row)
+
+--- Funciones de tabla ---
+ anio_mes | pedidos | ingresos  | ticket_promedio 
+----------+---------+-----------+-----------------
+ 2017-01  |     787 | 120098.27 |          152.60
+ 2017-02  |    1718 | 244959.35 |          142.58
+ 2017-03  |    2617 | 368341.32 |          140.75
+ 2017-04  |    2377 | 353842.98 |          148.86
+ 2017-05  |    3640 | 503159.19 |          138.23
+(5 rows)
+
+       categoria       | pedidos |  ingresos  
+-----------------------+---------+------------
+ health_beauty         |    8757 | 1251145.54
+ watches_gifts         |    5599 | 1194824.97
+ bed_bath_table        |    9394 | 1035485.07
+ sports_leisure        |    7656 |  977728.77
+ computers_accessories |    6636 |  902922.70
+(5 rows)
+
+            seller_id             | estado |      ciudad      | pedidos | ingresos  | calificacion_prom | pct_entregas_tarde 
+----------------------------------+--------+------------------+---------+-----------+-------------------+--------------------
+ 4869f7a5dfa277a7dca6462dcf3b52b2 | SP     | guariba          |    1131 | 229237.63 |              4.14 |              10.50
+ 53243585a1d6dc2643021fd1853d8905 | BA     | lauro de freitas |     358 | 222776.05 |              4.13 |               3.45
+ 4a3ca9315b744ce9f8e9374361493884 | SP     | ibitinga         |    1804 | 200326.12 |              3.83 |               9.71
+ fa1c13f2614d7b5c4749cbc52fecda94 | SP     | sumare           |     584 | 192842.13 |              4.34 |               9.17
+ 7c67e1448b00f6e969d365cea6b010ab | SP     | itaquaquecetuba  |     982 | 187923.89 |              3.49 |               9.15
+(5 rows)
+
+--- Vistas ---
+ anio_mes | pedidos | ingresos  |  flete   | ticket_promedio 
+----------+---------+-----------+----------+-----------------
+ 2017-01  |     787 | 120098.27 | 16845.19 |          152.60
+ 2017-02  |    1718 | 244959.35 | 38602.34 |          142.58
+ 2017-03  |    2617 | 368341.32 | 57276.64 |          140.75
+ 2017-04  |    2377 | 353842.98 | 52005.63 |          148.86
+ 2017-05  |    3640 | 503159.19 | 79551.64 |          138.23
+(5 rows)
+
+       categoria       | pedidos | items |  ingresos  
+-----------------------+---------+-------+------------
+ health_beauty         |    8757 |  9585 | 1251145.54
+ watches_gifts         |    5599 |  5965 | 1194824.97
+ bed_bath_table        |    9394 | 11089 | 1035485.07
+ sports_leisure        |    7656 |  8573 |  977728.77
+ computers_accessories |    6636 |  7760 |  902922.70
+(5 rows)
+
+ region  | estado | pedidos |  ingresos  
+---------+--------+---------+------------
+ Sudeste | SP     |   41025 | 5152573.38
+ Sudeste | RJ     |   12656 | 1802416.85
+ Sudeste | MG     |   11454 | 1568616.96
+ Sur     | RS     |    5395 |  739437.46
+ Sur     | PR     |    4960 |  673912.68
+(5 rows)
+
+ estado | pedidos_entregados | dias_entrega_prom | pct_entrega_a_tiempo | dias_retraso_prom 
+--------+--------------------+-------------------+----------------------+-------------------
+ AL     |                396 |              24.5 |                78.54 |              2.05
+ MA     |                716 |              21.5 |                82.54 |              1.83
+ SE     |                333 |              21.4 |                84.68 |              2.48
+ PI     |                475 |              19.4 |                86.11 |              1.85
+ CE     |               1275 |              21.2 |                86.20 |              2.10
+(5 rows)
+
+     rango_retraso      | pedidos | calificacion_prom | pct_resenas_1_2 
+------------------------+---------+-------------------+-----------------
+ 1. A tiempo            |   89182 |              4.29 |            9.25
+ 2. 1-3 días tarde      |    1851 |              3.29 |           32.14
+ 3. 4-7 días tarde      |    1748 |              2.10 |           67.68
+ 4. Más de 7 días tarde |    2779 |              1.70 |           79.27
+(4 rows)
+
+  tipo_pago  | grupo_cuotas | pedidos |  ingresos  
+-------------+--------------+---------+------------
+ boleto      | 1 pago       |   19477 | 2369919.10
+ credit_card | 1 pago       |   23675 | 1956093.20
+ credit_card | 2-3 cuotas   |   22344 | 2545347.79
+ credit_card | 4-6 cuotas   |   15921 | 2504175.27
+ credit_card | 7-12 cuotas  |   11765 | 3536321.27
+(5 rows)
+
+             order_id             | order_item_id | fecha_compra | estado_pedido |   categoria    | estado_cliente | region  |            seller_id             |  tipo_pago  | price  | freight_value | dias_entrega | dias_retraso | review_score 
+----------------------------------+---------------+--------------+---------------+----------------+----------------+---------+----------------------------------+-------------+--------+---------------+--------------+--------------+--------------
+ e22acc9c116caa3f2b7121bbb380d08e |             1 | 2018-05-10   | Entregado     | bed_bath_table | SP             | Sudeste | da8622b14eb17ae2831f4ac5b9dab84a | credit_card | 129.90 |         12.00 |         6.41 |            0 |            5
+ 3594e05a005ac4d06a72673270ef9ec9 |             1 | 2018-05-07   | Entregado     | health_beauty  | SP             | Sudeste | 138dbe45fc62f1e244378131a6801526 | credit_card |  18.90 |          8.29 |         3.29 |            0 |            4
+ b33ec3b699337181488304f362a6b734 |             1 | 2017-03-10   | Entregado     | stationery     | SC             | Sur     | 3d871de0142ce09b7081e2b9d1733cb1 | credit_card |  69.00 |         17.22 |        25.73 |            0 |            3
+ 41272756ecddd9a9ed0180413cc22fb6 |             1 | 2017-10-12   | Entregado     | telephony      | PA             | Norte   | ef506c96320abeedfb894c34db06f478 | credit_card |  25.99 |         17.63 |        20.04 |            0 |            4
+ d957021f1127559cd947b62533f484f7 |             1 | 2017-11-14   | Entregado     | telephony      | SP             | Sudeste | 70a12e78e608ac31179aea7f8422044b | credit_card | 180.00 |         16.89 |        13.14 |            0 |            5
+(5 rows)
+

@@ -1,0 +1,17 @@
+﻿Componente,Pregunta/KPI,Filtros,Origen de datos,Objeto SQL
+Tarjeta K1: Ingresos totales,P1 · Ingresos por ventas,"F, C, E","Fact + dim_fecha, dim_producto, dim_cliente, dim_estado_pedido",dw.fn_total_ventas()
+Tarjeta K2: Ticket promedio,"P1, P5 · Ticket promedio (AOV)","F, C, E",Fact + dimensiones (pedidos únicos),dw.fn_ticket_promedio()
+Tarjeta K3: Tasa de recompra,P5 · Tasa de recompra,"F, C, E",Fact + dim_cliente (customer_unique_id),dw.fn_tasa_recompra()
+Gráfico G1: Línea de ingresos mensuales,P1 · Evolución de ventas por mes,"F, C, E",Fact + dim_fecha,dw.fn_ventas_mensuales()
+Gráfico G2: Barras Top categorías,P1 · Categorías con más ingresos,"F, E",Fact + dim_producto,dw.fn_top_categorias()
+Tabla T1: Ventas por estado/región,P1 · Estados que generan más ingresos,—,Fact + dim_cliente,dw.v_ventas_estado
+Tarjeta K4: Entrega a tiempo,"P2, P3 · Tasa de entrega a tiempo","F, C, E",Fact (entrega_a_tiempo) + dimensiones,dw.fn_tasa_entrega_a_tiempo()
+Tarjeta K5: Tiempo prom. de entrega,P2 · Tiempo promedio de entrega,"F, C, E",Fact (dias_entrega) + dimensiones,dw.fn_tiempo_promedio_entrega()
+Tarjeta K6: Calificación promedio,"P3, P4 · Calificación promedio","F, C, E",Fact (review_score) + dimensiones,dw.fn_calificacion_promedio()
+Gráfico G3: % a tiempo por estado,P2 · Estados con más retrasos,—,Fact + dim_cliente,dw.v_logistica_estado
+Gráfico G4: Calificación vs retraso,P3 · Efecto del retraso en la satisfacción,—,"Fact (dias_retraso, review_score)",dw.v_retraso_vs_resena
+Tabla T2: Detalle de pedidos,"P2, P3 · Drill-down de pedidos","F, C, E",Fact + todas las dimensiones,dw.v_detalle_ventas
+Gráfico G5: Pedidos por tipo de pago,P5 · Medios de pago preferidos,—,Fact + dim_pago,dw.v_metodos_pago
+Gráfico G6: Top vendedores,P4 · Vendedores que concentran ingresos,F,Fact + dim_vendedor,dw.fn_ranking_vendedores()
+Tabla T3: Ranking de vendedores,P4 · Ingresos y reputación por vendedor,"F, estado vendedor",Fact + dim_vendedor,dw.fn_ranking_vendedores()
+"Filtros globales (fecha, categoría, estado)",Todos,—,"dim_fecha, dim_producto, dim_cliente",Parámetros de las funciones fn_*

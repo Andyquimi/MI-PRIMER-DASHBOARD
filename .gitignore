@@ -1,0 +1,15 @@
+# Datos (pesados; se descargan de Kaggle, ver data/raw/LEEME.md)
+data/raw/*
+!data/raw/LEEME.md
+data/limpio/*
+!data/limpio/.gitkeep
+
+# Configuracion local
+.env
+
+# Python / sistema
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+Thumbs.db

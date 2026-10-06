@@ -1,0 +1,46 @@
+# PostgreSQL + pipeline ETL/SQL de la Fase 2 (BI Olist)
+# Uso rapido:   docker compose run --rm etl      (levanta la base y ejecuta TODO el pipeline)
+name: bi-olist
+
+services:
+  db:
+    image: postgres:17
+    container_name: bi-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-bi_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bi_password}
+      POSTGRES_DB: ${POSTGRES_DB:-bi_database}
+    ports:
+      # Puerto de TU equipo -> 5432 del contenedor. Si el 5432 esta ocupado, define DB_PORT=5434 en .env
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Scripts SQL (solo lectura) para poder ejecutarlos a mano con docker exec
+      - ./sql:/scripts:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  etl:
+    build: ./docker/etl
+    container_name: bi-etl
+    profiles: ["pipeline"]          # solo corre cuando lo pides: docker compose run --rm etl
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGPORT: "5432"                # puerto interno de la red de Docker (no cambia)
+      PGUSER: ${POSTGRES_USER:-bi_user}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-bi_password}
+      PGDATABASE: ${POSTGRES_DB:-bi_database}
+    volumes:
+      - ./:/app                     # lee data/raw y escribe data/limpio, docs/ y evidencias/ en tu carpeta
+    working_dir: /app
+    command: ["bash", "-c", "tr -d '\\r' < docker/run_pipeline.sh > /tmp/run_pipeline.sh && bash /tmp/run_pipeline.sh"]
+
+volumes:
+  postgres_data:

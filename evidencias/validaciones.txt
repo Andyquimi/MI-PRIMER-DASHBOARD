@@ -1,0 +1,101 @@
+       tabla       | filas  
+-------------------+--------
+ dim_cliente       |  95774
+ dim_estado_pedido |      8
+ dim_fecha         |   1461
+ dim_pago          |     25
+ dim_producto      |  32951
+ dim_vendedor      |   3095
+ fact_ventas_item  | 112279
+(7 rows)
+
+ items_en_staging | filas_en_hechos | diferencia 
+------------------+-----------------+------------
+           112279 |          112279 |          0
+(1 row)
+
+ sin_fecha_compra | sin_fecha_entrega | sin_cliente | sin_producto | sin_vendedor | sin_estado | sin_pago 
+------------------+-------------------+-------------+--------------+--------------+------------+----------
+                0 |                 0 |           0 |            0 |            0 |          0 |        0
+(1 row)
+
+ order_id | order_item_id | count 
+----------+---------------+-------
+(0 rows)
+
+ dim | clave | count 
+-----+-------+-------
+(0 rows)
+
+        tabla         |               restriccion               |                              definicion                              
+----------------------+-----------------------------------------+----------------------------------------------------------------------
+ dw.dim_cliente       | dim_cliente_pkey                        | PRIMARY KEY (cliente_key)
+ dw.dim_estado_pedido | dim_estado_pedido_pkey                  | PRIMARY KEY (estado_key)
+ dw.dim_fecha         | dim_fecha_pkey                          | PRIMARY KEY (fecha_key)
+ dw.dim_pago          | dim_pago_pkey                           | PRIMARY KEY (pago_key)
+ dw.dim_producto      | dim_producto_pkey                       | PRIMARY KEY (producto_key)
+ dw.dim_vendedor      | dim_vendedor_pkey                       | PRIMARY KEY (vendedor_key)
+ dw.fact_ventas_item  | fact_ventas_item_pkey                   | PRIMARY KEY (order_id, order_item_id)
+ dw.fact_ventas_item  | fact_ventas_item_pago_key_fkey          | FOREIGN KEY (pago_key) REFERENCES dw.dim_pago(pago_key)
+ dw.fact_ventas_item  | fact_ventas_item_fecha_compra_key_fkey  | FOREIGN KEY (fecha_compra_key) REFERENCES dw.dim_fecha(fecha_key)
+ dw.fact_ventas_item  | fact_ventas_item_fecha_entrega_key_fkey | FOREIGN KEY (fecha_entrega_key) REFERENCES dw.dim_fecha(fecha_key)
+ dw.fact_ventas_item  | fact_ventas_item_cliente_key_fkey       | FOREIGN KEY (cliente_key) REFERENCES dw.dim_cliente(cliente_key)
+ dw.fact_ventas_item  | fact_ventas_item_producto_key_fkey      | FOREIGN KEY (producto_key) REFERENCES dw.dim_producto(producto_key)
+ dw.fact_ventas_item  | fact_ventas_item_vendedor_key_fkey      | FOREIGN KEY (vendedor_key) REFERENCES dw.dim_vendedor(vendedor_key)
+ dw.fact_ventas_item  | fact_ventas_item_estado_key_fkey        | FOREIGN KEY (estado_key) REFERENCES dw.dim_estado_pedido(estado_key)
+(14 rows)
+
+ filas  | sin_fecha_entrega | sin_dias_entrega | sin_review | precio_nulo | flete_nulo 
+--------+-------------------+------------------+------------+-------------+------------
+ 112279 |              2406 |             2406 |        936 |           0 |          0
+(1 row)
+
+ order_status | items  | sin_fecha_entrega 
+--------------+--------+-------------------
+ delivered    | 109880 |                 8
+ shipped      |   1174 |              1174
+ canceled     |    527 |               526
+ processing   |    355 |               355
+ invoiced     |    340 |               340
+ approved     |      3 |                 3
+(6 rows)
+
+ montos_negativos | entrega_antes_de_compra | score_fuera_de_rango 
+------------------+-------------------------+----------------------
+                0 |                       0 |                    0
+(1 row)
+
+ pedidos | items  | ingresos_brutos | flete_total | ticket_promedio_bruto | primera_compra | ultima_compra 
+---------+--------+-----------------+-------------+-----------------------+----------------+---------------
+   98353 | 112279 |     13541712.78 |  2244490.79 |                137.68 | 2017-01-05     | 2018-08-29
+(1 row)
+
+ price_staging | price_hechos | diferencia 
+---------------+--------------+------------
+   13541712.78 |  13541712.78 |       0.00
+(1 row)
+
+ anio_mes | pedidos |  ingresos  
+----------+---------+------------
+ 2017-01  |     787 |  120098.27
+ 2017-02  |    1718 |  244959.35
+ 2017-03  |    2617 |  368341.32
+ 2017-04  |    2377 |  353842.98
+ 2017-05  |    3640 |  503159.19
+ 2017-06  |    3205 |  429916.61
+ 2017-07  |    3946 |  492287.30
+ 2017-08  |    4272 |  568245.79
+ 2017-09  |    4227 |  621415.91
+ 2017-10  |    4547 |  660179.62
+ 2017-11  |    7421 | 1003862.14
+ 2017-12  |    5618 |  742183.79
+ 2018-01  |    7187 |  945456.29
+ 2018-02  |    6624 |  837895.43
+ 2018-03  |    7168 |  981051.06
+ 2018-04  |    6919 |  993592.98
+ 2018-05  |    6833 |  992871.75
+ 2018-06  |    6145 |  863265.53
+ 2018-07  |    6233 |  878044.27
+ 2018-08  |    6421 |  848860.10
+(20 rows)
+
